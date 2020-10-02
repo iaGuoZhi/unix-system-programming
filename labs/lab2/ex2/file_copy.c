@@ -37,5 +37,7 @@ int main(int argc ,char *argv[]){
 		}
 	}while(1);
 
+	close(src_fd);
+	close(dst_fd);
 	exit(EXIT_SUCCESS);
 }
