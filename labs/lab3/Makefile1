@@ -13,7 +13,8 @@ MYLIB = mylib.a
 myapp: main.o $(MYLIB)
 	$(CC) -o myapp main.o $(MYLIB)
 
-$(MYLIB):hello.o here.o bye.o
+$(MYLIB): hello.o here.o bye.o
+	ar rcs $(MYLIB) hello.o here.o bye.o
 main.o : main.c mylib.h
 hello.o : hello.c mylib.h
 here.o : here.c mylib.h
