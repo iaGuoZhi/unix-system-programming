@@ -1,23 +1,17 @@
-CC = gcc  # C compiler
-CFLAGS = -fPIC -Wall -Wextra -O2 -g  # C flags
-LDFLAGS = -shared   # linking flags
-RM = rm -f   # rm command
-TARGET_LIB = libmylib.so.5.1.10  # target lib
+CC = gcc
+LD = gcc
 
-SRCS = hello.c here.c bye.c # source files
-OBJS = $(SRCS:.c=.o)
+CFLAGS = -o
+DYNLINKFLAGS = -shared -fPIC -o
 
-.PHONY: all
-all: ${TARGET_LIB}
+LIB_FILES = mydynlinklib.so
+PROG = hello
 
-$(TARGET_LIB): $(OBJS)
-	$(CC) ${LDFLAGS} -o $@ $^
+all: $(LIB_FILES)
 
-$(SRCS:.c=.d):%.d:%.c
-	$(CC) $(CFLAGS) -MM $< >$@
+$(LIB_FILES): hello.c here.c bye.c
+	$(LD) $(DYNLINKFLAGS) $(LIB_FILES) hello.c here.c bye.c
 
-include $(SRCS:.c=.d)
+link: 
+	$(CC) $(CFLAGS) $(PROG) main.c ./$(LIB_FILES)
 
-.PHONY: clean
-clean:
-	-${RM} ${TARGET_LIB} ${OBJS} $(SRCS:.c=.d)
