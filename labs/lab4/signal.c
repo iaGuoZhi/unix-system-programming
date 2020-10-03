@@ -90,7 +90,9 @@ int main(int argc, char *argv[]){
 		exit(0);
 	if(signal(SIGUSR1, my_sigusr1_handler)==SIG_ERR)
 		exit(0);
-
+	if(siginterrupt(SIGINT,1)==-1){
+		exit(0);
+	}
 	while(1){
 		char buf[200];
                 memset(buf, 0,200);
